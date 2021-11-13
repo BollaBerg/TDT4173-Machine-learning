@@ -1,0 +1,7 @@
+All apartments have an associated building: True
+Size of search grid: 5400
+Starting search at: 00:17:37
+Fitting 1 folds for each of 4 candidates, totalling 4 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=6, iterations=500, l2_leaf_reg=16, one_hot_max_size=8;, score=-0.011 total time=  16.1s
+[CV 1/1] END border_count=64, ctr_target_border_count=8, depth=8, iterations=1500, l2_leaf_reg=8, one_hot_max_size=16;, score=-0.008 total time=  17.5s
+[CV 1/1] END border_count=128, ctr_target_border_count=255, depth=4, iterations=500, l2_leaf_reg=16, one_hot_max_size=8;, score=-0.012 total time= 1.5min

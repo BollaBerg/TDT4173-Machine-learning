@@ -1,0 +1,207 @@
+All apartments have an associated building: True
+Size of search grid: 5400
+Starting search at: 12:43:41
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=16, ctr_target_border_count=128, depth=4, iterations=1500, l2_leaf_reg=2, one_hot_max_size=8;, score=-0.195 total time=  54.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=16, one_hot_max_size=16;, score=-0.160 total time=   4.2s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=16, ctr_target_border_count=2, depth=6, iterations=1500, l2_leaf_reg=32, one_hot_max_size=8;, score=-0.185 total time=   3.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=2, depth=10, iterations=1000, l2_leaf_reg=2, one_hot_max_size=8;, score=-0.145 total time=   8.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=128, depth=6, iterations=1500, l2_leaf_reg=8, one_hot_max_size=2;, score=-0.173 total time= 6.6min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=128, depth=8, iterations=1000, l2_leaf_reg=32, one_hot_max_size=16;, score=-0.180 total time=   2.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=8, depth=8, iterations=500, l2_leaf_reg=2, one_hot_max_size=2;, score=-0.178 total time=  17.4s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=10, iterations=1000, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.144 total time=  13.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=4, iterations=1000, l2_leaf_reg=16, one_hot_max_size=16;, score=-0.197 total time=   0.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=500, l2_leaf_reg=16, one_hot_max_size=8;, score=-0.176 total time=   5.4s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.140 total time=  20.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=6, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.155 total time=   8.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=16, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.176 total time=12.9min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=16, ctr_target_border_count=8, depth=16, iterations=1000, l2_leaf_reg=16, one_hot_max_size=16;, score=-0.183 total time= 1.5min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=8, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.143 total time=  13.1s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=32, depth=4, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.175 total time=  17.1s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=2;, score=-0.144 total time= 1.3min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=255, depth=10, iterations=1500, l2_leaf_reg=32, one_hot_max_size=8;, score=-0.175 total time= 3.7min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.146 total time=  11.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=16, ctr_target_border_count=2, depth=8, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.161 total time=   2.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.146 total time=   4.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=8, one_hot_max_size=8;, score=-0.154 total time=  18.1s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=16, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.159 total time=   3.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=2, depth=8, iterations=1500, l2_leaf_reg=8, one_hot_max_size=8;, score=-0.153 total time=   6.3s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=32, depth=8, iterations=1500, l2_leaf_reg=16, one_hot_max_size=8;, score=-0.164 total time=  35.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=1, depth=6, iterations=1000, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.168 total time=   1.1s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=2, depth=8, iterations=1000, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.150 total time=   1.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=6, iterations=1500, l2_leaf_reg=2, one_hot_max_size=8;, score=-0.157 total time=   8.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=8, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.143 total time=  51.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=2, one_hot_max_size=8;, score=-0.140 total time=  23.4s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=32, depth=10, iterations=1500, l2_leaf_reg=2, one_hot_max_size=8;, score=-0.142 total time= 1.2min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=6, iterations=500, l2_leaf_reg=16, one_hot_max_size=8;, score=-0.205 total time=   2.2s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.138 total time=  16.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=1000, l2_leaf_reg=8, one_hot_max_size=8;, score=-0.152 total time=  10.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=8, iterations=1500, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.142 total time=   3.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.138 total time=  11.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=16, iterations=1000, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.183 total time= 8.5min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=16, ctr_target_border_count=2, depth=10, iterations=1000, l2_leaf_reg=2, one_hot_max_size=8;, score=-0.164 total time=   7.1s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=6, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.151 total time=   1.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=2, depth=8, iterations=1500, l2_leaf_reg=2, one_hot_max_size=8;, score=-0.150 total time=   6.5s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=8, depth=8, iterations=1000, l2_leaf_reg=2, one_hot_max_size=8;, score=-0.153 total time=   8.6s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=8, one_hot_max_size=16;, score=-0.145 total time=  10.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=16, iterations=1500, l2_leaf_reg=8, one_hot_max_size=16;, score=-0.162 total time=12.3min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=4, iterations=1500, l2_leaf_reg=8, one_hot_max_size=16;, score=-0.176 total time=   1.4s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=2, depth=10, iterations=500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.156 total time=   2.3s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=128, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.140 total time= 4.0min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=16, iterations=1500, l2_leaf_reg=16, one_hot_max_size=16;, score=-0.156 total time=12.6min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=16, iterations=1500, l2_leaf_reg=32, one_hot_max_size=16;, score=-0.158 total time=12.5min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=4, iterations=1500, l2_leaf_reg=32, one_hot_max_size=16;, score=-0.193 total time=   1.3s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=32, depth=16, iterations=1000, l2_leaf_reg=32, one_hot_max_size=8;, score=-0.166 total time=12.0min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=255, depth=10, iterations=1500, l2_leaf_reg=8, one_hot_max_size=16;, score=-0.148 total time=   6.5s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=6, iterations=1000, l2_leaf_reg=32, one_hot_max_size=16;, score=-0.189 total time=   1.2s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=32, depth=6, iterations=1500, l2_leaf_reg=16, one_hot_max_size=16;, score=-0.175 total time=   1.6s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=2, depth=16, iterations=1500, l2_leaf_reg=16, one_hot_max_size=8;, score=-0.168 total time= 8.0min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=255, depth=8, iterations=1500, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.143 total time=   2.5s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.138 total time=  10.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=255, depth=10, iterations=1500, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.138 total time=  10.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=4, iterations=1000, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.179 total time=   0.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=16, iterations=500, l2_leaf_reg=32, one_hot_max_size=8;, score=-0.179 total time= 4.6min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=255, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.141 total time= 7.0min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=1000, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.143 total time=   7.4s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=8, depth=8, iterations=1000, l2_leaf_reg=8, one_hot_max_size=16;, score=-0.168 total time=   1.5s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=1500, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.138 total time=  11.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=500, l2_leaf_reg=8, one_hot_max_size=16;, score=-0.169 total time=   3.6s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.1s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=2, one_hot_max_size=16;, score=-0.138 total time=  11.4s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=1000, l2_leaf_reg=16, one_hot_max_size=8;, score=-0.165 total time=  39.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.1s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.8s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=2, depth=8, iterations=1500, l2_leaf_reg=32, one_hot_max_size=16;, score=-0.177 total time=   2.3s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.138 total time=  14.6s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=128, depth=8, iterations=1500, l2_leaf_reg=2, one_hot_max_size=2;, score=-0.154 total time=12.3min
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.1s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.1s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=32, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  10.9s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=8, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=8;, score=-0.139 total time=  23.5s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=   6.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=6, iterations=1500, l2_leaf_reg=8, one_hot_max_size=8;, score=-0.162 total time=   3.0s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=64, ctr_target_border_count=8, depth=8, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.148 total time=   2.2s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=32, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=   6.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=2, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=   6.7s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=1, one_hot_max_size=16;, score=-0.138 total time=  11.2s
+Fitting 1 folds for each of 1 candidates, totalling 1 fits
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=1500, l2_leaf_reg=8, one_hot_max_size=2;, score=-0.148 total time=  21.6s
+Best parameters: OrderedDict([('border_count', 254), ('ctr_target_border_count', 8), ('depth', 10), ('iterations', 1500), ('l2_leaf_reg', 1), ('one_hot_max_size', 16)])
+Number of negative predictions: 0
+Score: 0.06417005426511896
+All apartments have an associated building: True

@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/home/bolla/repos/tdt4173-machine-learning/Berg - Attempt - CatBoost (optimized).py", line 276, in <module>
+    parameter_search.fit(
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/skopt/searchcv.py", line 466, in fit
+    super().fit(X=X, y=y, groups=groups, **fit_params)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 891, in fit
+    self._run_search(evaluate_candidates)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/skopt/searchcv.py", line 512, in _run_search
+    optim_result = self._step(
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/skopt/searchcv.py", line 408, in _step
+    all_results = evaluate_candidates(params_dict)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 838, in evaluate_candidates
+    out = parallel(
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/parallel.py", line 1056, in __call__
+    self.retrieve()
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/parallel.py", line 935, in retrieve
+    self._output.extend(job.get(timeout=self.timeout))
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 542, in wrap_future_result
+    return future.result(timeout=timeout)
+  File "/usr/lib/python3.9/concurrent/futures/_base.py", line 440, in result
+    self._condition.wait(timeout)
+  File "/usr/lib/python3.9/threading.py", line 312, in wait
+    waiter.acquire()
+KeyboardInterrupt

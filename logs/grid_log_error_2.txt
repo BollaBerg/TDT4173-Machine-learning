@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "/home/bolla/repos/tdt4173-machine-learning/Berg - Attempt - CatBoost (optimized).py", line 264, in <module>
+    parameter_search.fit(
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 891, in fit
+    self._run_search(evaluate_candidates)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 1392, in _run_search
+    evaluate_candidates(ParameterGrid(self.param_grid))
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/sklearn/model_selection/_search.py", line 838, in evaluate_candidates
+    out = parallel(
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/parallel.py", line 1046, in __call__
+    while self.dispatch_one_batch(iterator):
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/parallel.py", line 861, in dispatch_one_batch
+    self._dispatch(tasks)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/parallel.py", line 779, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 208, in apply_async
+    result = ImmediateResult(func)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 572, in __init__
+    self.results = batch()
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/parallel.py", line 262, in __call__
+    return [func(*args, **kwargs)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/joblib/parallel.py", line 262, in <listcomp>
+    return [func(*args, **kwargs)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/sklearn/utils/fixes.py", line 211, in __call__
+    return self.function(*args, **kwargs)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/sklearn/model_selection/_validation.py", line 681, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/catboost/core.py", line 5299, in fit
+    return self._fit(X, y, cat_features, None, None, None, sample_weight, None, None, None, None, baseline,
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/catboost/core.py", line 2037, in _fit
+    self._train(
+  File "/home/bolla/repos/tdt4173-machine-learning/venv/lib/python3.9/site-packages/catboost/core.py", line 1464, in _train
+    self._object._train(train_pool, test_pool, params, allow_clear_pool, init_model._object if init_model else None)
+  File "_catboost.pyx", line 4393, in _catboost._CatBoost._train
+  File "_catboost.pyx", line 4442, in _catboost._CatBoost._train
+KeyboardInterrupt

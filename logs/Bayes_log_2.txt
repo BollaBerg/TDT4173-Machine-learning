@@ -1,0 +1,12 @@
+All apartments have an associated building: True
+Size of search grid: 5400
+Starting search at: 00:37:26
+Fitting 1 folds for each of 4 candidates, totalling 4 fits
+Fitting 1 folds for each of 4 candidates, totalling 4 fits
+[CV 1/1] END border_count=128, ctr_target_border_count=2, depth=4, iterations=1500, l2_leaf_reg=16, one_hot_max_size=8;, score=-0.010 total time=  13.4s
+[CV 1/1] END border_count=64, ctr_target_border_count=2, depth=6, iterations=500, l2_leaf_reg=16, one_hot_max_size=2;, score=-0.010 total time=  17.8s
+[CV 1/1] END border_count=128, ctr_target_border_count=32, depth=6, iterations=500, l2_leaf_reg=8, one_hot_max_size=2;, score=-0.010 total time=  51.8s
+[CV 1/1] END border_count=16, ctr_target_border_count=128, depth=10, iterations=1000, l2_leaf_reg=2, one_hot_max_size=8;, score=-0.009 total time= 2.7min
+[CV 1/1] END border_count=128, ctr_target_border_count=2, depth=6, iterations=500, l2_leaf_reg=8, one_hot_max_size=8;, score=-0.010 total time=   9.1s
+[CV 1/1] END border_count=254, ctr_target_border_count=1, depth=10, iterations=500, l2_leaf_reg=8, one_hot_max_size=16;, score=-0.009 total time=  19.9s
+[CV 1/1] END border_count=16, ctr_target_border_count=128, depth=10, iterations=500, l2_leaf_reg=8, one_hot_max_size=8;, score=-0.010 total time= 3.3min
