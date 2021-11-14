@@ -1,5 +1,11 @@
+Similar projects:
 https://towardsdatascience.com/predicting-house-prices-with-machine-learning-62d5bcd0d68f
 https://www.kaggle.com/c/house-prices-advanced-regression-techniques
 https://medium.com/@manilwagle/predicting-house-prices-using-machine-learning-cab0b82cd3f
 https://medium.com/codex/house-price-prediction-with-machine-learning-in-python-cf9df744f7ff
 https://www.researchgate.net/publication/340896273_Machine_Learning_based_Predicting_House_Prices_using_Regression_Techniques
+
+Feature analysis:
+https://catboost.ai/en/docs/features/feature-importances-calculation
+https://towardsdatascience.com/understanding-model-predictions-with-lime-a582fdff3a3b
+https://christophm.github.io/interpretable-ml-book/pdp.html
