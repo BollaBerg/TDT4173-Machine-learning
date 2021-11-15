@@ -29,7 +29,7 @@ pd.set_option('display.max_rows', None)
 
 
 LOG_TARGET = True
-SEARCH_PARAMETERS = True
+SEARCH_PARAMETERS = False
 LOG_AREA = True
 REMOVE_OUTLIERS = True
 USE_POLAR_COORDINATES = True
@@ -179,11 +179,11 @@ else:
         eval_metric="MSLE",
         # task_type="GPU",
         border_count=254,
-        ctr_target_border_count=8,
+        ctr_target_border_count=2,
         depth=10,
         iterations=1500,
         l2_leaf_reg=1,
-        one_hot_max_size=16
+        one_hot_max_size=8,
     )
     model.fit(X_train, y_train, eval_set=valid_set, use_best_model=True)
 
@@ -245,8 +245,13 @@ print(f"Score: {evaluate_predictions(zeroed_predictions, y_valid)}")
 
 # url = "https://github.com/andbren/TDT-4173/blob/main/premade/test.csv"
 # data_test = read_file(url)
-data_test = pd.read_csv("data/preprocessed/test.csv")
-
+data_test = pd.read_csv("data/preprocessed/test.csv", index_col="id")
+if USE_POLAR_COORDINATES:
+    data_test.drop(["latitude", "longitude"], axis=1, inplace=True)
+else:
+    data_test.drop(["distance_from_center", "angle"], axis=1, inplace=True)
+    
+data_test = data_test.astype(needed_dtypes)
 
 submission = pd.DataFrame()
 submission['id'] = data_test.index
