@@ -7,6 +7,7 @@ seaborn==0.11.2
 ipykernel==6.5.0
 sklearn-pandas==2.2.0
 scikit-optimize==0.9.0
+lightgbm==3.3.1
 
 # Due to an Error occuring:
 ipywidgets==7.6.5
