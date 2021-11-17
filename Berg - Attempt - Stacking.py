@@ -10,7 +10,7 @@ import pandas as pd
 from pandas.api.types import CategoricalDtype
 import numpy as np
 from sklearn.metrics import make_scorer
-from sklearn.ensemble import StackingRegressor, RandomForestRegressor
+from sklearn.linear_model import Ridge
 
 from catboost import CatBoostRegressor, Pool
 import lightgbm as lgb
@@ -117,10 +117,12 @@ def evaluate_logged_predictions(predictions: pd.DataFrame, y_true: pd.DataFrame)
     return root_mean_squared_log_error(10 ** y_true, 10 ** predictions)
 
 if LOG_TARGET:
-    RMSLE_scorer = make_scorer(evaluate_logged_predictions, greater_is_better=False)
-else:
-    RMSLE_scorer = make_scorer(evaluate_predictions, greater_is_better=False)
+    evaluate_predictions = evaluate_logged_predictions
 
+RMSLE_scorer = make_scorer(evaluate_predictions, greater_is_better=False)
+
+def lightgbm_feval(y_true, y_pred):
+    return "RMSLE", evaluate_predictions(y_pred, y_true), False
 
 if LOG_TARGET:
     y_train = np.log10(y_train)
@@ -177,45 +179,62 @@ lightgbm_hyper_params = {
     'task': 'train',
     'boosting_type': 'gbdt',
     'objective': 'regression',
-    'metric': 'l2',
+    'metric': ["l1", 'l2'],
     'learning_rate': 0.005,
     'feature_fraction': 0.9,
     'bagging_fraction': 0.7,
     'bagging_freq': 10,
-    'verbosity': -1,
-    "max_depth": 8,
-    "max_leaves": 256,  
-    "max_bin": 512,
-    "eval_set": [(X_valid, y_valid)],
+    'verbosity': 0,
+    "max_depth": 5,
+    "num_leaves": 31,  
+    "max_bin": 256,
     "num_iterations": 100000,
-    "eval_metric": 'l1',
-    # "early_stopping_rounds": 100,
     "categorical_column": categorical_columns_indices
 }
 lightgbm = lgb.LGBMRegressor(**lightgbm_hyper_params)
 
-stack = StackingRegressor(
-    estimators = [
-        ("CatBoost", catboost),
-        ("LightGBM", lightgbm)
-    ],
-    final_estimator=RandomForestRegressor(),
-    passthrough=True
+# Fit all first-level models
+print("Fitting CatBoost")
+catboost.fit(X_train, y_train,
+    eval_set=valid_set,
+    use_best_model=True
+)
+print("Fitting LightGBM")
+callbacks = [lgb.early_stopping(10, verbose=0), lgb.log_evaluation(period=0)]
+lightgbm.fit(X_train, y_train, 
+    early_stopping_rounds=1000,
+    eval_set=[(X_valid, y_valid)],
+    eval_metric=lightgbm_feval,
+    callbacks=callbacks
 )
 
-stack.fit(X_train, y_train)
-predictions = stack.predict(X_valid)
+train_pred = pd.DataFrame({
+    "catboost": catboost.predict(X_train),
+    "lightgbm": lightgbm.predict(X_train)
+})
 
-if LOG_TARGET:
-    predictions = 10 ** predictions
-    y_valid = 10 ** y_valid
+# Create stack
+print("Fitting stack")
+stack = Ridge()
+stack.fit(train_pred, y_train)
 
-print(f"Number of negative predictions: {sum((1 for pred in predictions if pred < 0))}")
+# Predict validation stuff
+print("Predicting validation stuff")
+catboost_pred = catboost.predict(X_valid)
+lightgbm_pred = lightgbm.predict(X_valid)
+valid_pred = pd.DataFrame({
+    "catboost": catboost_pred,
+    "lightgbm": lightgbm_pred
+})
+stack_pred = stack.predict(valid_pred)
 
-zeroed_predictions = np.where(predictions < 0, 0, predictions)
-print(f"Score: {evaluate_predictions(zeroed_predictions, y_valid)}")
+
+print(f"CatBoost score on valid set: {evaluate_predictions(catboost_pred, y_valid)}")
+print(f"LightGBM score on valid set: {evaluate_predictions(lightgbm_pred, y_valid)}")
+print(f"Stack score on valid set: {evaluate_predictions(stack_pred, y_valid)}")
 
 
+print("Starting test stuff")
 # url = "https://github.com/andbren/TDT-4173/blob/main/premade/test.csv"
 # data_test = read_file(url)
 data_test = pd.read_csv("data/preprocessed/test.csv", index_col="id")
@@ -242,20 +261,41 @@ else:
     )
 
 submission = pd.DataFrame()
+submission_catboost = pd.DataFrame()
+submission_lightgbm = pd.DataFrame()
 submission['id'] = data_test.index
+submission_catboost['id'] = data_test.index
+submission_lightgbm['id'] = data_test.index
 
 if LOG_AREA:
     data_test["area_total"] = np.log10(data_test["area_total"] + 1)
     data_test["area_kitchen"] = np.log10(data_test["area_kitchen"] + 1)
     data_test["area_living"] = np.log10(data_test["area_living"] + 1)
 
-predictions_test = stack.predict(data_test)
+# Predict test stuff
+print("Predict test stuff")
+catboost_test = catboost.predict(data_test)
+lightgbm_test = lightgbm.predict(data_test)
+test_pred = pd.DataFrame({
+    "catboost": catboost_test,
+    "lightgbm": lightgbm_test
+})
+stack_test = stack.predict(test_pred)
 
 if LOG_TARGET:
-    predictions_test = 10 ** predictions_test
+    stack_test = 10 ** stack_test
+    catboost_test = 10 ** catboost_test
+    lightgbm_test = 10 ** lightgbm_test
 
-submission["price_prediction"] = predictions_test
+submission["price_prediction"] = stack_test
+submission_catboost["price_prediction"] = catboost_test
+submission_lightgbm["price_prediction"] = lightgbm_test
 
+print("Saving CSVs")
 savepath = 'stacked_submission.csv'
+savepath_catboost = "stacked_catboost_submission.csv"
+savepath_lightgmb = "stacked_lightgmb_submission.csv"
 submission.to_csv(savepath, index=False)
-print(f"Training done! Submission saved to '{savepath}'")
+submission_catboost.to_csv(savepath_catboost, index=False)
+submission_lightgbm.to_csv(savepath_lightgmb, index=False)
+print(f"Training done! Submission saved to '{savepath}', '{savepath_catboost}' and '{savepath_lightgmb}'")
