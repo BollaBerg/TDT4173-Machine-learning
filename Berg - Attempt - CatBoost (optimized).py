@@ -9,19 +9,13 @@
 
 # %%
 from datetime import datetime
+from lightgbm.engine import train
 import pandas as pd
 from pandas.api.types import CategoricalDtype
-import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
 from sklearn.metrics import make_scorer
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.base import BaseEstimator, TransformerMixin
 
 from catboost import CatBoostRegressor, Pool
-from sklearn_pandas import DataFrameMapper
 
 from skopt import BayesSearchCV
 
@@ -29,7 +23,7 @@ pd.set_option('display.max_rows', None)
 
 
 LOG_TARGET = True
-SEARCH_PARAMETERS = False
+SEARCH_PARAMETERS = True
 LOG_AREA = True
 REMOVE_OUTLIERS = True
 USE_POLAR_COORDINATES = True
@@ -63,15 +57,15 @@ y_valid = data_valid["price"]
 needed_dtypes = {
     "seller": CategoricalDtype(categories=[0, 1, 2, 3, 4]),
     "floor": "uint8",
-    "rooms": "uint8",
-    "bathrooms_shared": "uint8",
-    "bathrooms_private": "uint8",
+    "rooms": "category", # "uint8",
+    "bathrooms_shared": "category", # "uint8",
+    "bathrooms_private": "category", # "uint8",
     "windows_court": CategoricalDtype(categories=[0, 1, 2]),
     "windows_street": CategoricalDtype(categories=[0, 1, 2]),
-    "balconies": "uint8",
-    "loggias": "uint8",
+    "balconies": "category", # "uint8",
+    "loggias": "category", # "uint8",
     "condition": CategoricalDtype(categories=[0, 1, 2, 3, 4]),
-    "phones": "uint8",
+    "phones": "category", # "uint8",
     "new": CategoricalDtype(categories=[0, 1, 2]),
     "district": CategoricalDtype(categories=list(range(13))),
     "constructed": "uint16",
@@ -83,6 +77,8 @@ needed_dtypes = {
     "parking": CategoricalDtype(categories=[0, 1, 2, 3]),
     "garbage_chute": "bool",
     "heating": CategoricalDtype(categories=[0, 1, 2, 3, 4]),
+    "bathroom_amount": "category",
+    "cluster": "category",
 }
 X_train = X_train.astype(needed_dtypes)
 X_valid = X_valid.astype(needed_dtypes)
@@ -125,24 +121,24 @@ def evaluate_logged_predictions(predictions: pd.DataFrame, y_true: pd.DataFrame)
       >>> results = model.predict(X_valid)
       >>> score = evaluate_predictions(results, y_valid)
     """
-    return root_mean_squared_log_error(10 ** y_true, 10 ** predictions)
+    return root_mean_squared_log_error(np.expm1(y_true), np.expm1(predictions))
 
 if LOG_TARGET:
-    RMSLE_scorer = make_scorer(evaluate_logged_predictions, greater_is_better=False)
-else:
-    RMSLE_scorer = make_scorer(evaluate_predictions, greater_is_better=False)
+    evaluate_predictions = evaluate_logged_predictions
+
+RMSLE_scorer = make_scorer(evaluate_predictions, greater_is_better=False)
 
 
 if LOG_TARGET:
-    y_train = np.log10(y_train)
-    y_valid = np.log10(y_valid)
+    y_train = np.log1p(y_train)
+    y_valid = np.log1p(y_valid)
 if LOG_AREA:
-    X_train["area_total"] = np.log10(X_train["area_total"])
-    X_train["area_kitchen"] = np.log10(X_train["area_kitchen"])
-    X_train["area_living"] = np.log10(X_train["area_living"])
-    X_valid["area_total"] = np.log10(X_valid["area_total"])
-    X_valid["area_kitchen"] = np.log10(X_valid["area_kitchen"])
-    X_valid["area_living"] = np.log10(X_valid["area_living"])
+    X_train["area_total"] = np.log1p(X_train["area_total"])
+    X_train["area_kitchen"] = np.log1p(X_train["area_kitchen"])
+    X_train["area_living"] = np.log1p(X_train["area_living"])
+    X_valid["area_total"] = np.log1p(X_valid["area_total"])
+    X_valid["area_kitchen"] = np.log1p(X_valid["area_kitchen"])
+    X_valid["area_living"] = np.log1p(X_valid["area_living"])
 
 
 if USE_POLAR_COORDINATES:
@@ -152,8 +148,29 @@ else:
     X_train.drop(["distance_from_center", "angle"], axis=1, inplace=True)
     X_valid.drop(["distance_from_center", "angle"], axis=1, inplace=True)
 
-
-categorical_columns = list(X_train.select_dtypes(include=["category", "bool"]).columns)
+categorical_columns = [
+    "seller",
+    "rooms",
+    "bathrooms_shared",
+    "bathrooms_private",
+    "windows_court",
+    "windows_street",
+    "balconies",
+    "loggias",
+    "condition",
+    "phones",
+    "new",
+    "district",
+    "material",
+    "elevator_without",
+    "elevator_passenger",
+    "elevator_service",
+    "parking",
+    "garbage_chute",
+    "heating",
+    "bathroom_amount",
+    "cluster",
+]
 categorical_columns_indices = [X_train.columns.get_loc(c) for c in categorical_columns if c in X_train]
 
 
@@ -196,7 +213,7 @@ valid_indeces = X_valid.index
 
 if SEARCH_PARAMETERS:
     search_grid = {
-        "iterations" : [500, 1000, 1500],
+        "iterations" : [500, 1000, 2000],
         "depth" : [4, 6, 8, 10, 16],
         "l2_leaf_reg" : [1, 2, 8, 16, 32],
         "border_count" : [16, 64, 128, 254],
@@ -213,7 +230,7 @@ if SEARCH_PARAMETERS:
     parameter_search = BayesSearchCV(
         model,
         search_grid,
-        n_iter=100,
+        n_iter=20,
         scoring=RMSLE_scorer,
         cv=[(train_indeces, valid_indeces)],
         verbose=3
@@ -232,10 +249,6 @@ else:
     print(f"Best parameters: {model.get_all_params()}")
     print(f"Feature importance: {model.feature_importances_}")
     predictions = model.predict(X_valid)
-
-if LOG_TARGET:
-    predictions = 10 ** predictions
-    y_valid = 10 ** y_valid
 
 print(f"Number of negative predictions: {sum((1 for pred in predictions if pred < 0))}")
 
@@ -257,9 +270,9 @@ submission = pd.DataFrame()
 submission['id'] = data_test.index
 
 if LOG_AREA:
-    data_test["area_total"] = np.log10(data_test["area_total"])
-    data_test["area_kitchen"] = np.log10(data_test["area_kitchen"])
-    data_test["area_living"] = np.log10(data_test["area_living"])
+    data_test["area_total"] = np.log1p(data_test["area_total"])
+    data_test["area_kitchen"] = np.log1p(data_test["area_kitchen"])
+    data_test["area_living"] = np.log1p(data_test["area_living"])
 
 
 if SEARCH_PARAMETERS:
@@ -268,11 +281,11 @@ else:
     predictions_test = model.predict(data_test)
 
 if LOG_TARGET:
-    predictions_test = 10 ** predictions_test
+    predictions_test = np.expm1(predictions_test)
 
 submission["price_prediction"] = predictions_test
 
-savepath = 'CatBoost_submission.csv'
+savepath = 'submissions/CatBoost_submission.csv'
 submission.to_csv(savepath, index=False)
 print(f"Training done! Submission saved to '{savepath}'")
 
