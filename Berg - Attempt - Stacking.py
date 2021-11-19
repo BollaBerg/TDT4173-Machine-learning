@@ -10,7 +10,7 @@ import pandas as pd
 from pandas.api.types import CategoricalDtype
 import numpy as np
 from sklearn.metrics import make_scorer
-from sklearn.linear_model import Ridge
+from sklearn.ensemble import RandomForestRegressor
 
 from catboost import CatBoostRegressor, Pool
 import lightgbm as lgb
@@ -223,17 +223,21 @@ lightgbm.fit(X_train, y_train,
     early_stopping_rounds=1000,
     eval_set=[(X_valid, y_valid)],
     eval_metric=lightgbm_feval,
-    callbacks=callbacks
+    callbacks=callbacks             # Mute LightGBM
 )
 
 train_pred = pd.DataFrame({
     "catboost": catboost.predict(X_train),
-    "lightgbm": lightgbm.predict(X_train)
+    "lightgbm": lightgbm.predict(X_train),
+    "area_total": data_train["area_total"],
+    "rooms": data_train["rooms"],
+    "distance_from_center": data_train["distance_from_center"],
+    "angle": data_train["angle"]
 })
 
 # Create stack
 print("Fitting stack")
-stack = Ridge()
+stack = RandomForestRegressor()
 stack.fit(train_pred, y_train)
 
 # Predict validation stuff
@@ -242,7 +246,11 @@ catboost_pred = catboost.predict(X_valid)
 lightgbm_pred = lightgbm.predict(X_valid)
 valid_pred = pd.DataFrame({
     "catboost": catboost_pred,
-    "lightgbm": lightgbm_pred
+    "lightgbm": lightgbm_pred,
+    "area_total": data_valid["area_total"],
+    "rooms": data_valid["rooms"],
+    "distance_from_center": data_valid["distance_from_center"],
+    "angle": data_valid["angle"]
 })
 stack_pred = stack.predict(valid_pred)
 
@@ -297,7 +305,11 @@ catboost_test = catboost.predict(data_test)
 lightgbm_test = lightgbm.predict(data_test)
 test_pred = pd.DataFrame({
     "catboost": catboost_test,
-    "lightgbm": lightgbm_test
+    "lightgbm": lightgbm_test,
+    "area_total": data_test["area_total"],
+    "rooms": data_test["rooms"],
+    "distance_from_center": data_test["distance_from_center"],
+    "angle": data_test["angle"]
 })
 stack_test = stack.predict(test_pred)
 
