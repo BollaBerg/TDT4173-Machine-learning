@@ -229,10 +229,10 @@ lightgbm.fit(X_train, y_train,
 train_pred = pd.DataFrame({
     "catboost": catboost.predict(X_train),
     "lightgbm": lightgbm.predict(X_train),
-    "area_total": data_train["area_total"],
-    "rooms": data_train["rooms"],
-    "distance_from_center": data_train["distance_from_center"],
-    "angle": data_train["angle"]
+    "area_total": X_train["area_total"],
+    "rooms": X_train["rooms"],
+    "distance_from_center": X_train["distance_from_center"],
+    "angle": X_train["angle"]
 })
 
 # Create stack
@@ -247,10 +247,10 @@ lightgbm_pred = lightgbm.predict(X_valid)
 valid_pred = pd.DataFrame({
     "catboost": catboost_pred,
     "lightgbm": lightgbm_pred,
-    "area_total": data_valid["area_total"],
-    "rooms": data_valid["rooms"],
-    "distance_from_center": data_valid["distance_from_center"],
-    "angle": data_valid["angle"]
+    "area_total": X_valid["area_total"],
+    "rooms": X_valid["rooms"],
+    "distance_from_center": X_valid["distance_from_center"],
+    "angle": X_valid["angle"]
 })
 stack_pred = stack.predict(valid_pred)
 
