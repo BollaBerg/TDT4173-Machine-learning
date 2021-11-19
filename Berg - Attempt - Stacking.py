@@ -9,8 +9,12 @@
 import pandas as pd
 from pandas.api.types import CategoricalDtype
 import numpy as np
+from sklearn.ensemble import RandomForestRegressor, AdaBoostRegressor, GradientBoostingRegressor
+from sklearn.linear_model import LinearRegression, Lasso
 from sklearn.metrics import make_scorer
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.svm import SVR
 
 from catboost import CatBoostRegressor, Pool
 import lightgbm as lgb
@@ -177,7 +181,6 @@ valid_set = Pool(
     cat_features = categorical_columns
 )
 
-
 catboost = CatBoostRegressor(
     cat_features = categorical_columns,
     logging_level="Silent",
@@ -211,6 +214,31 @@ lightgbm_hyper_params = {
 }
 lightgbm = lgb.LGBMRegressor(**lightgbm_hyper_params)
 
+linear_regression = LinearRegression()
+lasso = make_pipeline(
+    MinMaxScaler(feature_range=(0, 1)),
+    Lasso(random_state=42, selection="random")
+)
+svm = SVR()
+adaboost = AdaBoostRegressor(
+    base_estimator=CatBoostRegressor(
+        cat_features = categorical_columns_indices,
+        logging_level="Silent",
+        custom_metric="MSLE",
+        eval_metric="MSLE",
+        # task_type="GPU",
+        border_count=254,
+        ctr_target_border_count=2,
+        depth=10,
+        iterations=1500,
+        l2_leaf_reg=1,
+        one_hot_max_size=8
+    ),
+    loss="square"
+)
+simple_adaboost = AdaBoostRegressor(loss="square")
+grad_boost = GradientBoostingRegressor(random_state=42)
+
 # Fit all first-level models
 print("Fitting CatBoost")
 catboost.fit(X_train, y_train,
@@ -226,37 +254,79 @@ lightgbm.fit(X_train, y_train,
     callbacks=callbacks             # Mute LightGBM
 )
 
-train_pred = pd.DataFrame({
-    "catboost": catboost.predict(X_train),
-    "lightgbm": lightgbm.predict(X_train),
-    "area_total": X_train["area_total"],
-    "rooms": X_train["rooms"],
-    "distance_from_center": X_train["distance_from_center"],
-    "angle": X_train["angle"]
-})
+print("Fitting linear regression")
+linear_regression.fit(X_train, y_train)
+print("Fitting lasso")
+lasso.fit(X_train, y_train)
+print("Fitting SVM")
+svm.fit(X_train, y_train)
+print("Fitting AdaBoost")
+adaboost.fit(X_train, y_train)
+print("Fitting simple AdaBoost")
+simple_adaboost.fit(X_train, y_train)
+print("Fitting Gradient Boost")
+grad_boost.fit(X_train, y_train)
 
-# Create stack
-print("Fitting stack")
-stack = RandomForestRegressor()
-stack.fit(train_pred, y_train)
+# train_pred = pd.DataFrame({
+#     "catboost": catboost.predict(X_train),
+#     "lightgbm": lightgbm.predict(X_train),
+#     "linear_regression": linear_regression.predict(X_train),
+#     "lasso": lasso.predict(X_train),
+#     "svm": svm.predict(X_train),
+#     "adaboost": adaboost.predict(X_train),
+#     "adaboost_simple": simple_adaboost.predict(X_train),
+#     "gradboost": grad_boost.predict(X_train),
+#     "area_total": X_train["area_total"],
+#     "rooms": X_train["rooms"],
+#     "distance_from_center": X_train["distance_from_center"],
+#     "angle": X_train["angle"]
+# })
+
+# # Create stack
+# print("Fitting stack")
+# stack = RandomForestRegressor()
+# stack.fit(train_pred, y_train)
 
 # Predict validation stuff
 print("Predicting validation stuff")
 catboost_pred = catboost.predict(X_valid)
 lightgbm_pred = lightgbm.predict(X_valid)
+linear_pred = linear_regression.predict(X_valid)
+lasso_pred = lasso.predict(X_valid)
+svm_pred = svm.predict(X_valid)
+ada_pred = adaboost.predict(X_valid)
+simple_ada_pred =  simple_adaboost.predict(X_valid)
+grad_pred = grad_boost.predict(X_valid)
+
 valid_pred = pd.DataFrame({
     "catboost": catboost_pred,
     "lightgbm": lightgbm_pred,
+    "linear_regression": linear_pred,
+    "lasso": lasso_pred,
+    "svm": svm_pred,
+    "adaboost": ada_pred,
+    "adaboost_simple": simple_ada_pred,
+    "gradboost": grad_pred,
     "area_total": X_valid["area_total"],
     "rooms": X_valid["rooms"],
     "distance_from_center": X_valid["distance_from_center"],
     "angle": X_valid["angle"]
 })
+# Create stack
+print("Fitting stack")
+stack = RandomForestRegressor()
+stack.fit(valid_pred, y_valid)
 stack_pred = stack.predict(valid_pred)
 
 
 print(f"CatBoost score on valid set: {evaluate_predictions(catboost_pred, y_valid)}")
 print(f"LightGBM score on valid set: {evaluate_predictions(lightgbm_pred, y_valid)}")
+print(f"Linear score on valid set: {evaluate_predictions(linear_pred, y_valid)}")
+print(f"Lasso score on valid set: {evaluate_predictions(lasso_pred, y_valid)}")
+print(f"SVM score on valid set: {evaluate_predictions(svm_pred, y_valid)}")
+print(f"AdaBoost score on valid set: {evaluate_predictions(ada_pred, y_valid)}")
+print(f"Simple AdaBoost score on valid set: {evaluate_predictions(simple_ada_pred, y_valid)}")
+print(f"Gradient Boosting score on valid set: {evaluate_predictions(grad_pred, y_valid)}")
 print(f"Stack score on valid set: {evaluate_predictions(stack_pred, y_valid)}")
 
 
@@ -264,8 +334,6 @@ print("Starting test stuff")
 # url = "https://github.com/andbren/TDT-4173/blob/main/premade/test.csv"
 # data_test = read_file(url)
 data_test = pd.read_csv("data/preprocessed/test.csv", index_col="id")
-
-data_test = data_test.astype(needed_dtypes)
 
 if USE_POLAR_COORDINATES:
     data_test.drop(["latitude", "longitude"], axis=1, inplace=True)
@@ -289,23 +357,38 @@ else:
 submission = pd.DataFrame()
 submission_catboost = pd.DataFrame()
 submission_lightgbm = pd.DataFrame()
+submission_adaboost = pd.DataFrame()
 submission['id'] = data_test.index
 submission_catboost['id'] = data_test.index
 submission_lightgbm['id'] = data_test.index
+submission_adaboost['id'] = data_test.index
 
 if LOG_AREA:
     data_test["area_total"] = np.log1p(data_test["area_total"])
     data_test["area_kitchen"] = np.log1p(data_test["area_kitchen"])
     data_test["area_living"] = np.log1p(data_test["area_living"])
 
+data_test = data_test.astype(needed_dtypes)
 
 # Predict test stuff
 print("Predict test stuff")
 catboost_test = catboost.predict(data_test)
 lightgbm_test = lightgbm.predict(data_test)
+linear_test = linear_regression.predict(data_test)
+lasso_test = lasso.predict(data_test)
+svm_test = svm.predict(data_test)
+ada_test = adaboost.predict(data_test)
+simple_ada_test =  simple_adaboost.predict(data_test)
+grad_test = grad_boost.predict(data_test)
 test_pred = pd.DataFrame({
     "catboost": catboost_test,
     "lightgbm": lightgbm_test,
+    "linear_regression": linear_test,
+    "lasso": lasso_test,
+    "svm": svm_test,
+    "adaboost": ada_test,
+    "adaboost_simple": simple_ada_test,
+    "gradboost": grad_test,
     "area_total": data_test["area_total"],
     "rooms": data_test["rooms"],
     "distance_from_center": data_test["distance_from_center"],
@@ -321,12 +404,15 @@ if LOG_TARGET:
 submission["price_prediction"] = stack_test
 submission_catboost["price_prediction"] = catboost_test
 submission_lightgbm["price_prediction"] = lightgbm_test
+submission_lightgbm["price_prediction"] = ada_test
 
 print("Saving CSVs")
 savepath = 'submissions/stacked_submission.csv'
 savepath_catboost = "submissions/stacked_catboost_submission.csv"
 savepath_lightgmb = "submissions/stacked_lightgmb_submission.csv"
+savepath_adaboost = "submissions/stacked_adaboost_submission.csv"
 submission.to_csv(savepath, index=False)
 submission_catboost.to_csv(savepath_catboost, index=False)
 submission_lightgbm.to_csv(savepath_lightgmb, index=False)
-print(f"Training done! Submission saved to '{savepath}', '{savepath_catboost}' and '{savepath_lightgmb}'")
+submission_adaboost.to_csv(savepath_adaboost, index=False)
+print(f"Training done! Submission saved to '{savepath}', '{savepath_catboost}',  '{savepath_lightgmb}' and '{savepath_adaboost}'")
