@@ -52,15 +52,15 @@ y_valid = data_valid["price"]
 needed_dtypes = {
     "seller": CategoricalDtype(categories=[0, 1, 2, 3, 4]),
     "floor": "uint8",
-    "rooms": "uint8",
-    "bathrooms_shared": "uint8",
-    "bathrooms_private": "uint8",
+    "rooms": "category", # "uint8",
+    "bathrooms_shared": "category", # "uint8",
+    "bathrooms_private": "category", # "uint8",
     "windows_court": CategoricalDtype(categories=[0, 1, 2]),
     "windows_street": CategoricalDtype(categories=[0, 1, 2]),
-    "balconies": "uint8",
-    "loggias": "uint8",
+    "balconies": "category", # "uint8",
+    "loggias": "category", # "uint8",
     "condition": CategoricalDtype(categories=[0, 1, 2, 3, 4]),
-    "phones": "uint8",
+    "phones": "category", # "uint8",
     "new": CategoricalDtype(categories=[0, 1, 2]),
     "district": CategoricalDtype(categories=list(range(13))),
     "constructed": "uint16",
@@ -72,6 +72,8 @@ needed_dtypes = {
     "parking": CategoricalDtype(categories=[0, 1, 2, 3]),
     "garbage_chute": "bool",
     "heating": CategoricalDtype(categories=[0, 1, 2, 3, 4]),
+    "bathroom_amount": "category",
+    "cluster": "category",
 }
 X_train = X_train.astype(needed_dtypes)
 X_valid = X_valid.astype(needed_dtypes)
@@ -114,7 +116,7 @@ def evaluate_logged_predictions(predictions: pd.DataFrame, y_true: pd.DataFrame)
       >>> results = model.predict(X_valid)
       >>> score = evaluate_predictions(results, y_valid)
     """
-    return root_mean_squared_log_error(10 ** y_true, 10 ** predictions)
+    return root_mean_squared_log_error(np.expm1(y_true), np.expm1(predictions))
 
 if LOG_TARGET:
     evaluate_predictions = evaluate_logged_predictions
@@ -125,15 +127,15 @@ def lightgbm_feval(y_true, y_pred):
     return "RMSLE", evaluate_predictions(y_pred, y_true), False
 
 if LOG_TARGET:
-    y_train = np.log10(y_train)
-    y_valid = np.log10(y_valid)
+    y_train = np.log1p(y_train)
+    y_valid = np.log1p(y_valid)
 if LOG_AREA:
-    X_train["area_total"] = np.log10(X_train["area_total"] + 1)
-    X_train["area_kitchen"] = np.log10(X_train["area_kitchen"] + 1)
-    X_train["area_living"] = np.log10(X_train["area_living"] + 1)
-    X_valid["area_total"] = np.log10(X_valid["area_total"] + 1)
-    X_valid["area_kitchen"] = np.log10(X_valid["area_kitchen"] + 1)
-    X_valid["area_living"] = np.log10(X_valid["area_living"] + 1)
+    X_train["area_total"] = np.log1p(X_train["area_total"])
+    X_train["area_kitchen"] = np.log1p(X_train["area_kitchen"])
+    X_train["area_living"] = np.log1p(X_train["area_living"])
+    X_valid["area_total"] = np.log1p(X_valid["area_total"])
+    X_valid["area_kitchen"] = np.log1p(X_valid["area_kitchen"])
+    X_valid["area_living"] = np.log1p(X_valid["area_living"])
 
 
 if USE_POLAR_COORDINATES:
@@ -143,14 +145,30 @@ else:
     X_train.drop(["distance_from_center", "angle"], axis=1, inplace=True)
     X_valid.drop(["distance_from_center", "angle"], axis=1, inplace=True)
 
-
-categorical_columns = list(X_train.select_dtypes(include=["category", "bool"]).columns)
+categorical_columns = [
+    "seller",
+    "rooms",
+    "bathrooms_shared",
+    "bathrooms_private",
+    "windows_court",
+    "windows_street",
+    "balconies",
+    "loggias",
+    "condition",
+    "phones",
+    "new",
+    "district",
+    "material",
+    "elevator_without",
+    "elevator_passenger",
+    "elevator_service",
+    "parking",
+    "garbage_chute",
+    "heating",
+    "bathroom_amount",
+    "cluster",
+]
 categorical_columns_indices = [X_train.columns.get_loc(c) for c in categorical_columns if c in X_train]
-
-X_combined = X_train.append(X_valid)
-y_combined = y_train.append(y_valid)
-train_indeces = X_train.index
-valid_indeces = X_valid.index
 
 ### CATBOOST ###
 valid_set = Pool(
@@ -185,8 +203,8 @@ lightgbm_hyper_params = {
     'bagging_fraction': 0.7,
     'bagging_freq': 10,
     'verbosity': 0,
-    "max_depth": 5,
-    "num_leaves": 31,  
+    "max_depth": 6,
+    "num_leaves": 60,  
     "max_bin": 256,
     "num_iterations": 100000,
     "categorical_column": categorical_columns_indices
@@ -268,9 +286,10 @@ submission_catboost['id'] = data_test.index
 submission_lightgbm['id'] = data_test.index
 
 if LOG_AREA:
-    data_test["area_total"] = np.log10(data_test["area_total"] + 1)
-    data_test["area_kitchen"] = np.log10(data_test["area_kitchen"] + 1)
-    data_test["area_living"] = np.log10(data_test["area_living"] + 1)
+    data_test["area_total"] = np.log1p(data_test["area_total"])
+    data_test["area_kitchen"] = np.log1p(data_test["area_kitchen"])
+    data_test["area_living"] = np.log1p(data_test["area_living"])
+
 
 # Predict test stuff
 print("Predict test stuff")
@@ -283,18 +302,18 @@ test_pred = pd.DataFrame({
 stack_test = stack.predict(test_pred)
 
 if LOG_TARGET:
-    stack_test = 10 ** stack_test
-    catboost_test = 10 ** catboost_test
-    lightgbm_test = 10 ** lightgbm_test
+    stack_test = np.expm1(stack_test)
+    catboost_test = np.expm1(catboost_test)
+    lightgbm_test = np.expm1(lightgbm_test)
 
 submission["price_prediction"] = stack_test
 submission_catboost["price_prediction"] = catboost_test
 submission_lightgbm["price_prediction"] = lightgbm_test
 
 print("Saving CSVs")
-savepath = 'stacked_submission.csv'
-savepath_catboost = "stacked_catboost_submission.csv"
-savepath_lightgmb = "stacked_lightgmb_submission.csv"
+savepath = 'submissions/stacked_submission.csv'
+savepath_catboost = "submissions/stacked_catboost_submission.csv"
+savepath_lightgmb = "submissions/stacked_lightgmb_submission.csv"
 submission.to_csv(savepath, index=False)
 submission_catboost.to_csv(savepath_catboost, index=False)
 submission_lightgbm.to_csv(savepath_lightgmb, index=False)
