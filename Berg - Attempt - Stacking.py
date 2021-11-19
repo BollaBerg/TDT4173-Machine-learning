@@ -243,7 +243,8 @@ grad_boost = GradientBoostingRegressor(random_state=42)
 print("Fitting CatBoost")
 catboost.fit(X_train, y_train,
     eval_set=valid_set,
-    use_best_model=True
+    use_best_model=True,
+    early_stopping_rounds=100
 )
 print("Fitting LightGBM")
 callbacks = [lgb.early_stopping(10, verbose=0), lgb.log_evaluation(period=0)]
@@ -400,11 +401,12 @@ if LOG_TARGET:
     stack_test = np.expm1(stack_test)
     catboost_test = np.expm1(catboost_test)
     lightgbm_test = np.expm1(lightgbm_test)
+    ada_test = np.expm1(ada_test)
 
 submission["price_prediction"] = stack_test
 submission_catboost["price_prediction"] = catboost_test
 submission_lightgbm["price_prediction"] = lightgbm_test
-submission_lightgbm["price_prediction"] = ada_test
+submission_adaboost["price_prediction"] = ada_test
 
 print("Saving CSVs")
 savepath = 'submissions/stacked_submission.csv'
